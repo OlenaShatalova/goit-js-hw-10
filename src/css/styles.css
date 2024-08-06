@@ -29,9 +29,15 @@ input:hover {
   border-color: #000;
 }
 
-input:active {
+input:focus {
   color: #000;
   border-color: #4e75ff;
+}
+
+input:disabled {
+  color: #808080;
+  border-color: #808080;
+  background: #fafafa;
 }
 
 button {
@@ -45,6 +51,7 @@ button {
   font-size: 16px;
   letter-spacing: 0.04em;
   color: #fff;
+  /* cursor: pointer; */
 }
 button:hover {
   background: #6c8cff;
@@ -52,6 +59,7 @@ button:hover {
 button:disabled {
   background: #cfcfcf;
   color: #989898;
+  cursor: not-allowed;
 }
 
 .timer {
