@@ -25,15 +25,9 @@ function convertMs(ms) {
 function addLeadingZero(value) {
   return String(value).padStart(2, '0');
 }
-function btnDisabled() {
-  button.setAttribute('disabled', true);
-}
 
-////////general code
 const button = document.querySelector('button');
-/// ad function disabled
-// button.setAttribute('disabled', true);
-btnDisabled();
+button.disabled = true;
 const input = document.querySelector('input');
 let userSelectedDate;
 let timerId;
@@ -46,30 +40,25 @@ const inputDate = flatpickr('#datetime-picker', {
   onClose(selectedDates) {
     if (selectedDates[0].getTime() > Date.now()) {
       userSelectedDate = selectedDates[0].getTime();
-      button.removeAttribute('disabled');
+      button.disabled = false;
     } else {
       iziToast.error({
-        title: 'Error',
         titleColor: '#fff',
         message: 'Please choose a date in the future',
         messageColor: '#fff',
         color: '#ef4040',
         position: 'topRight',
       });
-      // button.setAttribute('disabled', true);
-      btnDisabled();
+      button.disabled = true;
     }
   },
 });
 
-button.addEventListener('click', onButtonClick);
-
-function onButtonClick() {
-  // button.setAttribute('disabled', true);
-  btnDisabled();
-  input.setAttribute('disabled', true);
+button.addEventListener('click', () => {
+  button.disabled = true;
+  input.disabled = true;
   startTimer();
-}
+});
 
 function startTimer() {
   timerId = setInterval(() => {
@@ -78,14 +67,12 @@ function startTimer() {
     if (timeLeft <= 0) {
       clearInterval(timerId);
       iziToast.info({
-        title: 'info',
         message: 'Time is up!',
         position: 'topCenter',
       });
-      input.removeAttribute('disabled');
+      input.disabled = false;
     } else {
       const { days, hours, minutes, seconds } = convertMs(timeLeft);
-
       document.querySelector('[data-days]').textContent = addLeadingZero(days);
       document.querySelector('[data-hours]').textContent = addLeadingZero(hours);
       document.querySelector('[data-minutes]').textContent = addLeadingZero(minutes);
